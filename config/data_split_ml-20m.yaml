@@ -1,0 +1,7 @@
+log_mlflow: False
+mlflow_experiment: sae_recsys_data
+run_name: ml-20m
+
+data_path: /home/jovyan/klenitskiy/data/ml-20m/ratings.csv
+test_size: 0.1
+train_sae_size: 0.4

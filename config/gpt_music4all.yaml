@@ -1,0 +1,43 @@
+cuda_visible_devices: 2
+
+log_mlflow: False
+mlflow_experiment: sae_recsys_gpt
+run_name: music4all
+save_model: True
+model_name: BERT
+
+data_path: /home/jovyan/denisova/research/sparse_autoencoders/data/music4all/
+
+dataset_params:
+  max_length: 64
+  time_col: timestamp
+
+dataloader:
+  batch_size: 128
+  test_batch_size: 256
+  num_workers: 8
+  validation_size: 10000
+
+gpt_config:
+  vocab_size: 2
+  n_positions: ${dataset_params.max_length}
+  n_embd: 64
+  n_layer: 2
+  n_head: 2
+
+bert_config:
+  vocab_size: 2
+  max_position_embeddings: ${dataset_params.max_length}
+  hidden_size: 64
+  num_hidden_layers: 2
+  num_attention_heads: 2
+  
+
+seqrec_module:
+  lr: 0.001
+  predict_top_k: 10
+  filter_seen: True
+
+trainer_params:
+  max_epochs: 100
+patience: 10

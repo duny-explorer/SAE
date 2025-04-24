@@ -1,0 +1,7 @@
+log_mlflow: False
+mlflow_experiment: sae_recsys_data
+run_name: music4all
+
+data_path: /home/jovyan/denisova/research/sparse_autoencoders/data/music4all/data.csv
+test_size: 0.1
+train_sae_size: 0.4

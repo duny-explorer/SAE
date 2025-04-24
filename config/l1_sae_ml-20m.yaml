@@ -1,0 +1,39 @@
+cuda_visible_devices: 3
+
+log_mlflow: False  # if False save result only to hydra output directory
+mlflow_experiment: sae_recsys_ml-20m
+mlflow_tag:
+run_name:
+log_detailed_tables: False  # log tables with all metrics neuron vs feature
+save_sae: False  # save sae model, activations on test set, top examples for each neuron
+num_top_examples: 100  # number of top examples for each neuron
+min_top_activation: 0.1  # min activation to include in top examples
+save_activations_sample:  # save only sample of test activations
+
+data_path: /home/jovyan/mlruns/311478491323376785/7c9094befe4a444399dcb1ec705b23b7/artifacts/  # path to train and test datasets
+model_path: /home/jovyan/mlruns/474423816429520182/443f8bb8bb814ecba81d1a317a1ef274/artifacts/gpt.pt # 64_2_2_maxlen_64
+item_features_path: /home/jovyan/klenitskiy/sparse_autoencoders/results/ml-20m/item_features_raw.csv
+start_feature: Action  # first columns with features in item features dataframe
+
+max_length: 64
+batch_size: 256
+num_workers: 16
+
+activations_layer: block  # output of which transformer layer to use for SAE
+layer_number: 0
+activation_col: activation_normed  # activation or activation_normed (with std=1)
+
+sae_type: vanilla
+sae_params:
+  activation_dim: 64
+  dict_size: 512
+  lr: 0.001
+  l1_penalty: 0.1
+  warmup_steps: 1000
+  resample_steps:
+steps: 10000
+log_steps: 200
+
+thresholds: [0, 0.1, 0.3, 0.5, 1]  # thresholds for neuron statistics
+dead_threshold: 0  # threshold under which neuron is considered as dead
+roc_auc_sample_size: 200000  # sample for roc auc computation for speed
